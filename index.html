@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>¿Quién me está apuntando como blanco y por qué?</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 3_Who is targeting me and why.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario ¿Quién me está apuntando como blanco y por qué?</legend>
+	<div id="test">
+		<div class="cuestion">1. “Se aprovecha o crea fallas de seguridad para su beneficio”. La definici&oacute;n anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : Hacker.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Ciberdelincuente.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Forense digital.&nbsp;</label>
+		</div>
+		<div class="cuestion">2. “Inicialmente ingresan de manera ilegal, pero ofrecen solucionar el problema a cambio de dinero”. La definici&oacute;n anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Sombrero blanco. &nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Sombrero negro. &nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Sombrero gris. &nbsp;</label>
+		</div>
+		<div class="cuestion">3.“Buscan el beneficio econ&oacute;mico a toda costa”. El enunciado anterior corresponde a la causa de ciberataque denominada:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Venganza.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Razones ideol&oacute;gicas.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Razones econ&oacute;micas. &nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. “Se aprovecha o crea fallas de seguridad para su beneficio”. La definición anterior corresponde a:",
+				respuestas:
+				{
+					a: "Hacker.",
+					b: "Ciberdelincuente.",
+					c: "Forense digital.",
+				},
+				respuestaCorrecta: "b",
+			},
+			{
+				pregunta: "2. “Inicialmente ingresan de manera ilegal, pero ofrecen solucionar el problema a cambio de dinero”. La definición anterior corresponde a:",
+				respuestas:
+				{
+					a: "Sombrero blanco.",
+					b: "Sombrero negro.",
+					c: "Sombrero gris.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "3. “Buscan el beneficio económico a toda costa”. El enunciado anterior corresponde a la causa de ciberataque denominada:",
+				respuestas:
+				{
+					a: "Venganza.",
+					b: "Razones ideológicas.",
+					c: "Razones económicas. ",
+				},
+				respuestaCorrecta: "c",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
